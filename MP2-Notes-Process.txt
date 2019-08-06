@@ -1,0 +1,61 @@
+2 types kasi yung joining, isa yun manual, e loop ang result then mag add ng property per record, dapat may lean() para maka add ng attribute sa records, isa yun populate, which dapat ang model, may field na object id type, then may path na attribute na dapat na e seset doon sa field which is kung saan mag join yun, yun path is name ng collection, kung ni call ang populate, mag auto join sya sa path which is yun collection name, then hahanapin nyo doon ang object id with the same id naka save sa record.
+
+yung pagination, para kunin ang total pages
+
+pages = result / item per page
+
+so 2 queries ginagawa, first query, kunin ang result then naka limit sya and may skips base sa current page
+example sa page 2 
+skips = current page * item per page
+
+eto yun results na e skiskip, then limit is yun item per page
+
+limit(item per page)
+
+tapos after kunin ang results with skips and limit, syempre naka limit so 10 lang talaga count na e rereturn so need mag 2nd query para kuning mag total count ng filtered result, so may ququery ulit with count(), same query but count na
+
+Model.find(filter).skip(10).limit(10);
+Model.find(filter).count()
+
+ibig sabihin nasa 1st page ako, kasi 10 ang skip, since 10 per page. so kung 20 ang skip sa 2nd page na
+
+
+tapos mag ask siguro sya sa view count and follows, pag na view na ng user ang prompt, mag sasave na record na na view na nya, then pag e viview nya ulit, mag ququery sa database, if nandun record ng view nya, hindi na mag aadd ng record
+
+
+kung wala pa sya record, mag insert ng document, then e update yun prompt record, yun view_count field
+
+same sa follow xD if may record na sya sa followed_prompts, then meaning ina unfollow nya, if wala pa sya record then fina follow nya ang prompt
+
+clicks follow button
+
+check if user has follow record on the prompt
+
+if user has follow record then he is unfollowing the prompt
+
+if user has follow record
+delete follow record
+
+if user does not have follow record meaning he is following the prompt
+
+if user does not have follow record then
+add follow record
+^logic for views
+
+if user has follow record
+delete follow record
+update prompt follow_count to -1
+
+if user does not have follow record
+add follow record
+update prompt follow count to +1
+
+sa views naman
+
+clicks on view
+
+if user does not have view record
+add view record
+update prompt view_count to +1
+
+show prompt

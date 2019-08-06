@@ -12,6 +12,13 @@
     border-color: #673AB7;
 }
 
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background-color: #673AB7;
+    border-color: #673AB7;
+}
+
 .bootstrap-tagsinput .badge-info{
   margin-right: .5rem!important;
 }

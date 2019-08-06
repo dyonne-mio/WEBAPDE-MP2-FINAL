@@ -56,7 +56,7 @@ router.get('/search\/?', async function(req, res, next) {
         status: 0
     };
 
-    var itemPerPage = 10;
+    var itemPerPage = 10; //limits the item per page to 10
 
     var skip = itemPerPage * (page-1);
 
@@ -106,9 +106,9 @@ router.get('/search\/?', async function(req, res, next) {
     );	
 });
 
-async function addPromptView(prompt, username){
+async function addPromptView(prompt, username){ //need to be async for await to work
 
-    var viewRecord = await PromptViews.findOne({
+    var viewRecord = await PromptViews.findOne({ //await because before response, need to wait for database
         prompt_id : prompt._id,
         username : username
     }).exec();
@@ -120,7 +120,7 @@ async function addPromptView(prompt, username){
             date_viewed : new Date()
         });
 
-        var prompt = await  Prompts.findOne({
+        var prompt = await Prompts.findOne({
             _id : prompt._id
         }).exec();
 
@@ -141,7 +141,7 @@ function getAddedBranches(prompt){
 	.sort({
 		'position' : 'asc'
 	})
-	.populate({
+	.populate({ //for joining
 		path : 'branch'
 	})
 	.exec();

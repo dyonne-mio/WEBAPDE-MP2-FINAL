@@ -554,29 +554,29 @@ router.post('/get-user-followed-prompts\/?', function(req, res, next) {
 
     FollowedPrompts.find({
         username : username,
-    }).populate({
+    }).populate({ //for joining 
         path : 'prompt',
         match : {
-            $or : [
+            $or : [ //where:
                 { title : { $regex : post.search_query, $options: 'i' } },
                 { content : { $regex : post.search_query, $options: 'i' } },
                 { tags : { $regex : post.search_query, $options: 'i' } }
             ]
-        }
+        }//if wala, return null
     }).skip(skip)
     .limit(itemPerPage)
     .sort({
         date_followed : 'desc'
-    }).lean().exec(async function(err, thePrompts){
-
+    }).lean().exec(async function(err, thePrompts){ //lean = return object instead of documents (so we can add new attr)
+//skipping items
         var count = 0;
 
-        for(var i = 0; i < thePrompts.length; i++){
+        for(var i = 0; i < thePrompts.length; i++){ //looping prompts
             if(!thePrompts[i].prompt){
                 thePrompts.splice(i, 1);
                 i -= 1;
             }else{
-                thePrompts[i].prompt.stats = await getPromptStats(thePrompts[i].prompt._id);
+                thePrompts[i].prompt.stats = await getPromptStats(thePrompts[i].prompt._id); //assigning value to stats
             }
         }
 
